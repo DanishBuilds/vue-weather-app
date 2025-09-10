@@ -1,0 +1,198 @@
+@use 'variables' as *;
+
+// Responsive mixins
+@mixin mobile {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-lg}) {
+    @content;
+  }
+}
+
+@mixin min-width($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin max-width($breakpoint) {
+  @media (max-width: $breakpoint - 1px) {
+    @content;
+  }
+}
+
+// Typography mixins
+@mixin text-style($size: $font-size-base, $weight: $font-weight-regular, $line-height: $line-height-normal, $color: $text-primary) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin heading-1 {
+  @include text-style($font-size-4xl, $font-weight-bold, $line-height-tight);
+}
+
+@mixin heading-2 {
+  @include text-style($font-size-3xl, $font-weight-semibold, $line-height-tight);
+}
+
+@mixin heading-3 {
+  @include text-style($font-size-2xl, $font-weight-medium, $line-height-normal);
+}
+
+@mixin body-large {
+  @include text-style($font-size-lg, $font-weight-regular);
+}
+
+@mixin body-regular {
+  @include text-style($font-size-base, $font-weight-regular);
+}
+
+@mixin body-small {
+  @include text-style($font-size-sm, $font-weight-regular);
+}
+
+@mixin caption {
+  @include text-style($font-size-xs, $font-weight-medium, $line-height-normal, $text-secondary);
+}
+
+// Button mixins
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: $border-radius-md;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid $primary-blue;
+    outline-offset: 2px;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: $primary-blue;
+  color: $white;
+  
+  &:hover:not(:disabled) {
+    background-color: $primary-blue-hover;
+  }
+  
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: $background-light;
+  color: $text-primary;
+  border: 1px solid $border-light;
+  
+  &:hover:not(:disabled) {
+    background-color: $white;
+    border-color: $primary-blue;
+  }
+}
+
+// Card mixins
+@mixin card {
+  background: $background-card;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+}
+
+@mixin card-hover {
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+// Form mixins
+@mixin input-base {
+  width: 100%;
+  padding: $spacing-md $spacing-lg;
+  border: 1px solid $border-light;
+  border-radius: $border-radius-md;
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  color: $text-primary;
+  background-color: $white;
+  transition: all 0.2s ease-in-out;
+  
+  &::placeholder {
+    color: $text-light;
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-blue;
+    box-shadow: 0 0 0 3px $primary-blue-light;
+  }
+  
+  &:invalid,
+  &[aria-invalid="true"] {
+    border-color: $error-red;
+  }
+}
+
+// Loading animation
+@mixin loading-spinner {
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  animation: spin 1s linear infinite;
+}
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Visual utilities
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
